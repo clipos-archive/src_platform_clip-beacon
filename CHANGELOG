@@ -1,0 +1,45 @@
+# CLIP ChangeLog for app-clip/clip-beacon
+
+*clip-beacon-0.1.2-r3 (14 Dec 2017)
+
+  14 Dec 2017; Nicolas Belouin <clipos@ssi.gouv.fr>
+  +clip-beacon-0.1.2-r3.ebuild, -clip-beacon-0.1.2-r2.ebuild:
+  Fix little mistype on optional packages probe.
+
+*clip-beacon-0.1.2-r2 (28 Nov 2017)
+
+  28 Nov 2017; Nicolas Belouin <clipos@ssi.gouv.fr>
+  +clip-beacon-0.1.2-r2.ebuild, -clip-beacon-0.1.2-r1.ebuild:
+  Add more data to the beacon, now with gateways, videomode, optional packages,
+  timezone, hardware status.
+
+
+  28 Nov 2017; Tony Cheneau <clipos@ssi.gouv.fr>
+  files/scripts/02-basic_info, files/_debian/postinst: 
+  Make beacon "beam" data less frequently (once per hour as opposed to each five minutes
+  List all users of the system (as opposed to only privusers.
+
+*clip-beacon-0.1.2-r1 (27 Nov 2017)
+
+  27 Nov 2017; Nicolas Belouin <clipos@ssi.gouv.fr>
+  +clip-beacon-0.1.2-r1.ebuild, -clip-beacon-0.1.2.ebuild:
+  Add rm-confs to clip-confs
+
+*clip-beacon-0.1.2 (25 Feb 2015)
+
+  25 Feb 2015; Hugo Chargois <clipos@ssi.gouv.fr>
+  +clip-beacon-0.1.2.ebuild, -clip-beacon-0.1.1.ebuild:
+  clip-beacon-send: improvements in how the HTTP POST body is made.
+
+*clip-beacon-0.1.1 (24 Feb 2015)
+
+  24 Feb 2015; Hugo Chargois <clipos@ssi.gouv.fr>
+  +clip-beacon-0.1.1.ebuild, -clip-beacon-0.1.0.ebuild:
+  clip-beacon-send: do not print the HTTP response contents to stdout, but
+  exit with an error if the HTTP status is not 2xx.
+
+*clip-beacon-0.1.0 (28 Jan 2015)
+
+  28 Jan 2015; Hugo Chargois <clipos@ssi.gouv.fr>
+  +clip-beacon-0.1.0.ebuild:
+  Fiat lux.

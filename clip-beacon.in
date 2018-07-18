@@ -1,0 +1,43 @@
+#!/bin/bash
+# Copyright 2015 ANSSI
+# Author: Hugo Chargois <clipos@ssi.gouv.fr>
+# All rights reserved
+
+# This script should be kept ash-compatible
+set -o pipefail
+
+NAME="BEACON"
+export BEACON_REPORT_DIR="@BEACON_REPORT_DIR@"
+BEACON_SCRIPTS="@BEACON_SCRIPTS@"
+BEACON_SEND_BIN="@BEACON_SEND_BIN@"
+
+ret=0
+
+logger -s -p daemon.info -t "${NAME}" "Starting..."
+if [ -e "$BEACON_REPORT_DIR" ]; then
+	logger -s -p daemon.debug -t "${NAME}" "Removing previous report files"
+	rm -rf "$BEACON_REPORT_DIR"/*
+else
+	logger -s -p daemon.debug -t "${NAME}" "Creating report dir"
+	mkdir "$BEACON_REPORT_DIR"
+fi
+logger -s -p daemon.debug -t "${NAME}" "Executing scripts"
+for script in "$BEACON_SCRIPTS"/*; do
+	[ -e "$script" ] || continue
+	$script | logger -s -p daemon.debug -t "${NAME}.${script##*/}"
+	if [ $? -ne 0 ]; then
+		ret=1
+		logger -s -p daemon.warn -t "${NAME}.${script##*/}" "Script exited with error"
+	else
+		logger -s -p daemon.debug -t "${NAME}.${script##*/}" "Script ran successfully"
+	fi
+done
+"$BEACON_SEND_BIN" 2>&1 | logger -s -p daemon.debug -t "${NAME}-SEND"
+[ $? -eq 0 ] || ret=1
+
+if [ $ret -eq 0 ]; then
+	logger -s -p daemon.info -t "${NAME}" "Exiting. Everything went fine"
+else
+	logger -s -p daemon.warn -t "${NAME}" "Exiting. There were errors!"
+fi
+
